@@ -19,7 +19,7 @@ public:
 	*
 	* @return the root node for this tree.
 	*/
-	virtual NodeInterface * getRootNode() const = 0;
+	virtual NodeInterface* getRootNode() const = 0;
 
 	/*
 	* Attempts to add the given int to the BST tree
