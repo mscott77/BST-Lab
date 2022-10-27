@@ -14,9 +14,10 @@ int main(){
     myTree = new BST();
     
     myTree->add(5);
-    myTree->add(4);
-    myTree->clear();
-    myTree->getRootNode();
-    myTree->remove(5);
+    myTree->add(3);
+    myTree->add(7);
+    myTree->PrintInOrder(myTree);
+
+    
     
 }
