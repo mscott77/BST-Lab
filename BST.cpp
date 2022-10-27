@@ -47,6 +47,7 @@
                 return insert(localRoot->right , data);
             }
             else { // in the case of a match, don't insert anything and return false. no Duplicate values are allowed
+                cout << "item already exists in the tree. no Items were added" << endl;
                 return false;
             }
         }
@@ -79,20 +80,21 @@
 	* a custom made function for testing. it prints out an In-Order Traversal of the tree
 	*/
     // helper function
-	void BST :: PrintInOrder(BST *treeToPrint)
+	void BST :: PrintInOrder()
     {
         cout << "In PrintInOrder" << endl;
         // if the tree is empty, don't call the recursive function
-        if(treeToPrint->getRootNode() == NULL){
+        if(this->root == NULL){
             cout << "root Node is NULL, tree is empty" << endl;
         }
         else{
-            InOrder(treeToPrint->getRootNode());
+            cout << "current tree as seen using InOrder Traversal" << endl;
+            InOrder(this->root);
         }
     }
 
     // the actual function
-    void BST :: InOrder(Node *n)
+    void BST :: InOrder(Node *n) // takes in the root node of the tree as the only paramater needed to start the traversal
     {
         if (n == NULL){return;}
         InOrder(n->getLeftChild());

@@ -16,7 +16,9 @@ int main(){
     myTree->add(5);
     myTree->add(3);
     myTree->add(7);
-    myTree->PrintInOrder(myTree);
+    myTree->PrintInOrder();
+    myTree->add(5);
+    myTree->PrintInOrder();
 
     
     

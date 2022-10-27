@@ -24,7 +24,7 @@ class Node : public NodeInterface {
 
         }
         //--------------------------------------------------DESTRUCTOR-------------------------------------------------
-        ~Node() // this function appears to no really be used...
+        ~Node() // this function appears to not really be used...
         {
             //cout << "In Node destructor" << endl;
         }

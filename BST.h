@@ -57,6 +57,6 @@ class BST : public BSTInterface {
         //------------------custom memberfunctions---------------
 
         // function to print the tree using in order traversal
-        void PrintInOrder(BST *treeToPrint);
+        void PrintInOrder();
         void InOrder(Node *n);
 };
