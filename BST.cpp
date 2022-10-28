@@ -72,20 +72,30 @@
     return false;
   } else {
     if (item < local_root->data) // if the item to insert is less than the current localRoot...
-      return erase(local_root->left, item);//search the left side of the subtree
-    else if (local_root->data < item)// if the item to insert is greater than the current localRoot...
-      return erase(local_root->right, item);//search the right side of the subtree
-    else { // if the item is not less than or greater than the current Node, it must BE EQUAL TO the current node 
-      Node* old_root = local_root; // save the address to the Node to be deleted in case you need it later
-      if (local_root->left == NULL) { // if the node to be deleted's left child is NULL
-        local_root = local_root->right; // set the current Node = to the RIGHT child (may be NULL or a valid Node)
-      } else if (local_root->right == NULL) {
-        local_root = local_root->left;
-      } else {
-        replace_parent(old_root, old_root->left);
-      }
-      delete old_root;      
-      return true;
+      return erase(local_root->left, item);     //search the left side of the subtree
+    else if (local_root->data < item)           // if the item to insert is greater than the current localRoot...
+      return erase(local_root->right, item);    //search the right side of the subtree
+    else {              // if the item is not less than or greater than the current Node, it must BE EQUAL TO the current node 
+        // 1 - save a pointer to the Node to be deleted. we will need it later
+        // 2 - if the Node to be deleted has 1 or less children,
+        //      reassign the pointer to the local root to point to the next Node instead of the current Node to be deleted
+        // 3 - if the Node to be deleted has two children, 
+        //      replace the Node to be deleted with it's predecessor, (its left childs rightmost leaf)
+        // 4 - delete the Node to that is to be deleted, oh wait we just reassigned the pointer that was pointing to it,
+        //      however will we find it again? oh right, we made another pointer that points to the same Node in step 1
+        Node* old_root = local_root;             
+        // the first two cases are for if the 
+        // Node to be deleted have no children,
+        // or only 1 child
+        if (local_root->left == NULL) {           // if the node to be deleted's left child is NULL
+            local_root = local_root->right;             // set the current Node = to the RIGHT child (may be NULL or a valid Node)
+        } else if (local_root->right == NULL){    // if the node to be deleted's RIGHT child is NULL
+            local_root = local_root->left;              // set the current Node = to the LEFT child (may be NULL or a valid Node)
+        } else {                                  // if the Node to be deleted has two children that are not NULL...
+            replace_parent(old_root, old_root->left);   // we will need to replace the Node to be deleted with its left childs rightmost child
+        }
+        delete old_root;  
+        return true;
     }
   }
 }
@@ -93,16 +103,17 @@
 
 void BST :: replace_parent(Node*& old_root,Node*& local_root) 
 {
-  if (local_root->right != NULL) {
-    replace_parent(old_root, local_root->right);
-  } else {
-    old_root->data = local_root->data;
-    old_root = local_root;
-    local_root = local_root->left;
-  }
+    // if the current Node's right child is not NULL, we can still keep going right. 
+    if (local_root->right != NULL) {
+        replace_parent(old_root, local_root->right); // recursively keep going right
+    } else { // if there are no more right children, you have found the furthestmost right child
+        old_root->data = local_root->data; //
+        old_root = local_root;
+        local_root = local_root->left;
+    }
 }
 
-	/*------------------------------------------clear------------------------------------------------
+	/*------------------------------------------clear------------------------------------------------(done)
 	* Removes all nodes from the tree, resulting in an empty tree.
 	*/
     // wrapper function for the eraseTree() function
