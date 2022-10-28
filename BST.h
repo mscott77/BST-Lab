@@ -17,20 +17,20 @@ class BST : public BSTInterface {
         ~BST()
         {
             cout << "In BST destructor" << endl;
-
+            clear();
         }
 
         //Please note that the class that implements this interface must be made
         //of objects which implement the NodeInterface
 
-        /*
+        /*-------------------------------------------------------------------------------------------------
         * Returns the root node for this tree
         *
         * @return the root node for this tree.
         */
         Node* getRootNode() const;
 
-        /*
+        /*-------------------------------------------------------------------------------------------------
         * Attempts to add the given int to the BST tree
         *
         * @return true if added
@@ -41,20 +41,27 @@ class BST : public BSTInterface {
         // recursive function
         bool insert(Node *& localRoot , int data);
 
-        /*
+        /*---------------------------------------------------------------------------------------------------
         * Attempts to remove the given int from the BST tree
         *
         * @return true if successfully removed
         * @return false if remove is unsuccessful(i.e. the int is not in the tree)
         */
+        //wrapper function
         bool remove(int data);
+        // recursive function
+        bool erase(Node*& local_root,const int& item);
+        // helper recursive function
+        void replace_parent(Node*& old_root,Node*& local_root);
 
-        /*
+
+        /*----------------------------------------------------------------------------------------------------
         * Removes all nodes from the tree, resulting in an empty tree.
         */
         void clear();
+        void eraseTree(Node *& localRoot);
 
-        //------------------custom memberfunctions---------------
+        //------------------------------------------custom memberfunctions-------------------------------------
 
         // function to print the tree using in order traversal
         void PrintInOrder();

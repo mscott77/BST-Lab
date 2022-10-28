@@ -3,7 +3,7 @@
 
     using namespace std;
     
-    /*------------------------------------------getRootNode()------------------------------------------------
+    /*------------------------------------------getRootNode()----------------------------------------(done)
 	* Returns the root node for this tree
 	*
 	* @return the root node for this tree.
@@ -14,7 +14,7 @@
         return root;
     }
 
-	/*------------------------------------------add()------------------------------------------------
+	/*------------------------------------------add()------------------------------------------------(done)
 	* Attempts to add the given int to the BST tree
 	*
 	* @return true if added
@@ -63,17 +63,67 @@
 	bool BST :: remove(int data)
     {
         cout << "In remove" << endl;
-        return false;
+        return erase(this->root,data);
 
     }
+
+    bool BST :: erase(Node*& local_root, const int& item) {
+  if (local_root == NULL) { // if you get to a Node and it's NULL, it means you're at a dead end, the item you want to erase was not found down this path
+    return false;
+  } else {
+    if (item < local_root->data) // if the item to insert is less than the current localRoot...
+      return erase(local_root->left, item);//search the left side of the subtree
+    else if (local_root->data < item)// if the item to insert is greater than the current localRoot...
+      return erase(local_root->right, item);//search the right side of the subtree
+    else { // if the item is not less than or greater than the current Node, it must BE EQUAL TO the current node 
+      Node* old_root = local_root; // save the address to the Node to be deleted in case you need it later
+      if (local_root->left == NULL) { // if the node to be deleted's left child is NULL
+        local_root = local_root->right; // set the current Node = to the RIGHT child (may be NULL or a valid Node)
+      } else if (local_root->right == NULL) {
+        local_root = local_root->left;
+      } else {
+        replace_parent(old_root, old_root->left);
+      }
+      delete old_root;      
+      return true;
+    }
+  }
+}
+
+
+void BST :: replace_parent(Node*& old_root,Node*& local_root) 
+{
+  if (local_root->right != NULL) {
+    replace_parent(old_root, local_root->right);
+  } else {
+    old_root->data = local_root->data;
+    old_root = local_root;
+    local_root = local_root->left;
+  }
+}
 
 	/*------------------------------------------clear------------------------------------------------
 	* Removes all nodes from the tree, resulting in an empty tree.
 	*/
+    // wrapper function for the eraseTree() function
 	void BST :: clear()
     {
         cout << "In clear" << endl;
+        // call the helper function to start recursion
+        eraseTree(root);
 
+    }
+
+    // recursively search the left and right children. if both a Nodes children are NULL, delete it
+    void BST :: eraseTree(Node *& localRoot)
+    {
+        if(localRoot != NULL)
+        {
+            eraseTree(localRoot->left);
+            eraseTree(localRoot->right);
+            delete localRoot;
+            localRoot = NULL;
+        }
     }
 
 	/*------------------------------------------MasonsCustomFunction------------------------------------------------
