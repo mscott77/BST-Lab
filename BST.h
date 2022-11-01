@@ -8,6 +8,22 @@ using namespace std;
 class BST : public BSTInterface {
     protected:
         Node *root = NULL; // start off the root to point to NULL since there are no items in the list an initialization
+
+    private:
+        // recursive helper function for add
+        bool insert(Node *& localRoot , int data);
+
+        // recursive helper functions for remove
+        bool erase(Node*& local_root,const int& item);
+        // helper recursive function
+        void replace_parent(Node*& old_root,Node*& local_root);
+
+        // recursive helper function for clear()
+        void eraseTree(Node *& localRoot);
+
+        // recursive helper function for printIntOrder()
+        void InOrder(Node *n);
+
     public:
         BST()
         {
@@ -38,8 +54,6 @@ class BST : public BSTInterface {
         */
        // wrapper function
         bool add(int data);
-        // recursive function
-        bool insert(Node *& localRoot , int data);
 
         /*---------------------------------------------------------------------------------------------------
         * Attempts to remove the given int from the BST tree
@@ -49,21 +63,15 @@ class BST : public BSTInterface {
         */
         //wrapper function
         bool remove(int data);
-        // recursive function
-        bool erase(Node*& local_root,const int& item);
-        // helper recursive function
-        void replace_parent(Node*& old_root,Node*& local_root);
 
 
         /*----------------------------------------------------------------------------------------------------
         * Removes all nodes from the tree, resulting in an empty tree.
         */
         void clear();
-        void eraseTree(Node *& localRoot);
 
         //------------------------------------------custom memberfunctions-------------------------------------
 
         // function to print the tree using in order traversal
         void PrintInOrder();
-        void InOrder(Node *n);
 };

@@ -87,11 +87,11 @@
         // the first two cases are for if the 
         // Node to be deleted have no children,
         // or only 1 child
-        if (local_root->left == NULL) {           // if the node to be deleted's left child is NULL
+        if (local_root->left == NULL) {                 // if the node to be deleted's left child is NULL
             local_root = local_root->right;             // set the current Node = to the RIGHT child (may be NULL or a valid Node)
-        } else if (local_root->right == NULL){    // if the node to be deleted's RIGHT child is NULL
+        } else if (local_root->right == NULL){          // if the node to be deleted's RIGHT child is NULL
             local_root = local_root->left;              // set the current Node = to the LEFT child (may be NULL or a valid Node)
-        } else {                                  // if the Node to be deleted has two children that are not NULL...
+        } else {                                        // if the Node to be deleted has two children that are not NULL...
             replace_parent(old_root, old_root->left);   // we will need to replace the Node to be deleted with its left childs rightmost child
         }
         delete old_root;  
